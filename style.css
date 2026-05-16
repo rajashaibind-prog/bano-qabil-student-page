@@ -567,6 +567,12 @@ h1.name {
   margin-left: 2px;
 }
 
+/* Keep Botpress chat above page animations */
+.bpFab,
+.bpWebchat {
+  z-index: 99999 !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
