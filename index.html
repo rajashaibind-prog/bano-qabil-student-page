@@ -11,40 +11,41 @@
 </head>
 <body>
   <div class="bg-gradient" aria-hidden="true"></div>
+  <div class="floating-shapes" aria-hidden="true">
+    <span class="shape shape-1"></span>
+    <span class="shape shape-2"></span>
+    <span class="shape shape-3"></span>
+    <span class="shape shape-4"></span>
+    <span class="shape shape-5"></span>
+    <span class="shape shape-6"></span>
+  </div>
   <canvas id="particles" aria-hidden="true"></canvas>
-
-  <main class="card">
-    <div class="glow-ring" aria-hidden="true"></div>
-
-    <div class="logo-wrap">
-      <img
-        src="assets/bano-qabil.svg"
-        alt="Bano Qabil — Free IT Training Program"
-        class="logo"
-        width="220"
-        height="220"
-      />
-    </div>
-
-    <p class="program reveal">Bano Qabil Student</p>
-    <h1 class="reveal name">
-      <span id="name-text">Muhammad Zain ul Abideen</span>
-    </h1>
-    <p class="course reveal">
-      <span class="course-label">Learning</span>
-      <span class="course-highlight" id="course-text">Essentials of AI</span>
-    </p>
-
-    <div class="ai-dots reveal" aria-hidden="true">
-      <span></span><span></span><span></span>
-    </div>
-
-    <footer class="credit reveal">
-      <span class="credit-text">Made with</span>
-      <span class="cursor-brand">Cursor AI</span>
-    </footer>
-  </main>
-
+  <div id="ripples" aria-hidden="true"></div>
+  <div class="card-wrap">
+    <div class="card-border" aria-hidden="true"></div>
+    <article class="card">
+      <div class="shine" aria-hidden="true"></div>
+      <div class="glow-ring" aria-hidden="true"></div>
+      <div class="logo-wrap">
+        <div class="orbit orbit-1" aria-hidden="true"></div>
+        <div class="orbit orbit-2" aria-hidden="true"></div>
+        <div class="sparkles" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+        <img src="assets/bano-qabil.svg" alt="Bano Qabil - Free IT Training Program" class="logo" width="220" height="220" />
+      </div>
+      <p class="program reveal"><span class="badge">Bano Qabil Student</span></p>
+      <h1 class="reveal name"><span id="name-text">Muhammad Zain ul Abideen</span></h1>
+      <p class="course reveal"><span class="course-label">Learning</span> <span class="course-highlight" id="course-text">Essentials of AI</span></p>
+      <div class="skill-bar reveal" aria-hidden="true">
+        <span class="skill-label">AI Progress</span>
+        <div class="skill-track"><div class="skill-fill" id="skill-fill"></div></div>
+      </div>
+      <div class="ai-dots reveal" aria-hidden="true"><span></span><span></span><span></span></div>
+      <div class="icons-row reveal" aria-hidden="true">
+        <span class="icon-chip">AI</span><span class="icon-chip">Code</span><span class="icon-chip">Learn</span>
+      </div>
+      <footer class="credit reveal"><span class="credit-text">Made with</span> <span class="cursor-brand">Cursor AI</span></footer>
+    </article>
+  </div>
   <script src="script.js"></script>
 </body>
 </html>

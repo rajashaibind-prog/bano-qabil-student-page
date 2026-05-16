@@ -11,7 +11,7 @@
   --green-mid: #0f5c44;
   --green-light: #1a8f66;
   --accent: #2ee6a8;
-  --card-bg: rgba(255, 255, 255, 0.92);
+  --card-bg: rgba(255, 255, 255, 0.94);
 }
 
 html {
@@ -30,7 +30,7 @@ body {
   position: relative;
 }
 
-/* Animated shifting background */
+/* Background */
 .bg-gradient {
   position: fixed;
   inset: 0;
@@ -53,6 +53,36 @@ body {
   100% { background-position: 0% 50%; }
 }
 
+/* Floating background shapes */
+.floating-shapes {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.shape {
+  position: absolute;
+  border-radius: 50%;
+  border: 2px solid rgba(46, 230, 168, 0.25);
+  animation: floatShape 18s ease-in-out infinite;
+}
+
+.shape-1 { width: 80px; height: 80px; top: 10%; left: 8%; animation-delay: 0s; }
+.shape-2 { width: 120px; height: 120px; top: 70%; left: 5%; animation-delay: -3s; }
+.shape-3 { width: 60px; height: 60px; top: 20%; right: 10%; animation-delay: -6s; }
+.shape-4 { width: 100px; height: 100px; bottom: 15%; right: 12%; animation-delay: -9s; }
+.shape-5 { width: 40px; height: 40px; top: 50%; left: 15%; animation-delay: -12s; }
+.shape-6 { width: 90px; height: 90px; top: 8%; right: 25%; animation-delay: -15s; }
+
+@keyframes floatShape {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); opacity: 0.4; }
+  25% { transform: translate(20px, -30px) rotate(90deg); opacity: 0.7; }
+  50% { transform: translate(-15px, 20px) rotate(180deg); opacity: 0.5; }
+  75% { transform: translate(25px, 15px) rotate(270deg); opacity: 0.8; }
+}
+
 #particles {
   position: fixed;
   inset: 0;
@@ -60,7 +90,64 @@ body {
   pointer-events: none;
 }
 
-/* Main card */
+#ripples {
+  position: fixed;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  border: 2px solid rgba(46, 230, 168, 0.6);
+  transform: translate(-50%, -50%) scale(0);
+  animation: rippleOut 0.8s ease-out forwards;
+}
+
+@keyframes rippleOut {
+  to {
+    transform: translate(-50%, -50%) scale(4);
+    opacity: 0;
+  }
+}
+
+/* Card wrapper + spinning border */
+.card-wrap {
+  position: relative;
+  z-index: 2;
+  padding: 3px;
+  border-radius: 26px;
+}
+
+.card-border {
+  position: absolute;
+  inset: 0;
+  border-radius: 26px;
+  background: conic-gradient(
+    from 0deg,
+    var(--accent),
+    var(--green-mid),
+    var(--green-light),
+    var(--accent)
+  );
+  animation: spinBorder 4s linear infinite;
+  z-index: 0;
+}
+
+@keyframes spinBorder {
+  to { transform: rotate(360deg); }
+}
+
+.card-wrap::after {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  background: var(--card-bg);
+  border-radius: 23px;
+  z-index: 1;
+}
+
 .card {
   position: relative;
   z-index: 2;
@@ -68,22 +155,16 @@ body {
   max-width: 440px;
   padding: 2.5rem 2rem 2rem;
   text-align: center;
-  background: var(--card-bg);
-  border-radius: 24px;
-  backdrop-filter: blur(12px);
-  box-shadow:
-    0 24px 60px rgba(0, 0, 0, 0.35),
-    0 0 0 1px rgba(255, 255, 255, 0.15) inset;
+  background: transparent;
+  border-radius: 23px;
+  overflow: hidden;
   opacity: 0;
   transform: translateY(40px) scale(0.95);
   animation: cardEnter 1s cubic-bezier(0.22, 1, 0.36, 1) 0.2s forwards;
-  transition: transform 0.3s ease;
 }
 
 .card.is-ready:hover {
-  box-shadow:
-    0 28px 70px rgba(0, 0, 0, 0.4),
-    0 0 0 1px rgba(255, 255, 255, 0.2) inset;
+  filter: brightness(1.02);
 }
 
 @keyframes cardEnter {
@@ -93,7 +174,30 @@ body {
   }
 }
 
-/* Pulsing ring behind logo */
+/* Shine sweep across card */
+.shine {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.35),
+    transparent
+  );
+  transform: skewX(-20deg);
+  animation: shineSweep 5s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 10;
+}
+
+@keyframes shineSweep {
+  0%, 100% { left: -100%; }
+  50% { left: 150%; }
+}
+
 .glow-ring {
   position: absolute;
   top: 2rem;
@@ -102,43 +206,114 @@ body {
   height: 200px;
   margin-left: -100px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(46, 230, 168, 0.35) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(46, 230, 168, 0.4) 0%, transparent 70%);
   animation: pulseRing 2.5s ease-in-out infinite;
   pointer-events: none;
 }
 
 @keyframes pulseRing {
   0%, 100% { transform: scale(0.9); opacity: 0.5; }
-  50% { transform: scale(1.15); opacity: 1; }
+  50% { transform: scale(1.2); opacity: 1; }
 }
 
 .logo-wrap {
   margin-bottom: 1.25rem;
   position: relative;
   z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 190px;
+}
+
+.orbit {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px dashed rgba(46, 230, 168, 0.45);
+  animation: orbitSpin 8s linear infinite;
+}
+
+.orbit-1 {
+  width: 200px;
+  height: 200px;
+}
+
+.orbit-2 {
+  width: 230px;
+  height: 230px;
+  animation-direction: reverse;
+  animation-duration: 12s;
+}
+
+@keyframes orbitSpin {
+  to { transform: rotate(360deg); }
+}
+
+.orbit-1::after,
+.orbit-2::after {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: var(--accent);
+  border-radius: 50%;
+  top: -5px;
+  left: 50%;
+  margin-left: -5px;
+  box-shadow: 0 0 12px var(--accent);
+}
+
+.sparkles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.sparkles span {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+  animation: sparkle 2s ease-in-out infinite;
+}
+
+.sparkles span:nth-child(1) { top: 10%; left: 20%; animation-delay: 0s; }
+.sparkles span:nth-child(2) { top: 25%; right: 15%; animation-delay: 0.4s; }
+.sparkles span:nth-child(3) { bottom: 20%; left: 25%; animation-delay: 0.8s; }
+.sparkles span:nth-child(4) { bottom: 15%; right: 20%; animation-delay: 1.2s; }
+
+@keyframes sparkle {
+  0%, 100% { transform: scale(0); opacity: 0; }
+  50% { transform: scale(1.5); opacity: 1; }
 }
 
 .logo {
-  width: 170px;
+  width: 160px;
   height: auto;
   display: block;
-  margin: 0 auto;
   border-radius: 16px;
-  animation: logoFloat 4s ease-in-out infinite;
+  animation: logoFloat 4s ease-in-out infinite, logoGlow 3s ease-in-out infinite;
   filter: drop-shadow(0 8px 20px rgba(15, 92, 68, 0.35));
   transition: transform 0.4s ease;
+  position: relative;
+  z-index: 2;
 }
 
 .logo:hover {
-  transform: scale(1.08) rotate(-2deg);
+  transform: scale(1.1) rotate(3deg);
 }
 
 @keyframes logoFloat {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+  50% { transform: translateY(-12px); }
 }
 
-/* Staggered reveal for text blocks */
+@keyframes logoGlow {
+  0%, 100% { filter: drop-shadow(0 8px 20px rgba(15, 92, 68, 0.35)); }
+  50% { filter: drop-shadow(0 12px 28px rgba(46, 230, 168, 0.5)); }
+}
+
 .reveal {
   opacity: 0;
   transform: translateY(20px);
@@ -148,8 +323,10 @@ body {
 .program { animation-delay: 0.5s; }
 .name { animation-delay: 0.7s; }
 .course { animation-delay: 0.9s; }
-.ai-dots { animation-delay: 1.1s; }
-.credit { animation-delay: 1.3s; }
+.skill-bar { animation-delay: 1s; }
+.ai-dots { animation-delay: 1.15s; }
+.icons-row { animation-delay: 1.25s; }
+.credit { animation-delay: 1.35s; }
 
 @keyframes revealUp {
   to {
@@ -159,30 +336,26 @@ body {
 }
 
 .program {
-  font-size: 0.8rem;
+  margin-bottom: 0.75rem;
+}
+
+.badge {
+  display: inline-block;
+  font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--green-mid);
-  margin-bottom: 0.75rem;
-  position: relative;
-  display: inline-block;
+  color: #fff;
+  background: linear-gradient(135deg, var(--green-mid), var(--green-light));
+  padding: 0.4rem 1rem;
+  border-radius: 50px;
+  animation: badgePulse 2s ease-in-out infinite;
+  box-shadow: 0 4px 15px rgba(15, 92, 68, 0.35);
 }
 
-.program::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -4px;
-  width: 100%;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--accent), transparent);
-  animation: lineSlide 2s ease-in-out infinite;
-}
-
-@keyframes lineSlide {
-  0%, 100% { transform: scaleX(0.3); opacity: 0.5; }
-  50% { transform: scaleX(1); opacity: 1; }
+@keyframes badgePulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 4px 15px rgba(15, 92, 68, 0.35); }
+  50% { transform: scale(1.05); box-shadow: 0 6px 22px rgba(46, 230, 168, 0.45); }
 }
 
 h1.name {
@@ -196,6 +369,25 @@ h1.name {
 
 #name-text {
   display: inline-block;
+}
+
+#name-text .letter {
+  display: inline-block;
+  animation: letterPop 0.5s ease backwards;
+}
+
+@keyframes letterPop {
+  from {
+    opacity: 0;
+    transform: translateY(20px) rotate(-8deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) rotate(0);
+  }
+}
+
+.name-done #name-text {
   background: linear-gradient(90deg, #111, var(--green-mid), #111);
   background-size: 200% auto;
   -webkit-background-clip: text;
@@ -212,23 +404,27 @@ h1.name {
 .course {
   font-size: 1.1rem;
   color: #444;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1rem;
 }
 
 .course-label {
   margin-right: 0.35rem;
+  animation: fadeInOut 3s ease-in-out infinite;
+}
+
+@keyframes fadeInOut {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
 }
 
 .course-highlight {
   font-weight: 700;
   color: var(--green-mid);
-  position: relative;
   display: inline-block;
 }
 
 .course-highlight::after {
   content: "|";
-  display: inline-block;
   margin-left: 2px;
   color: var(--accent);
   animation: blink 0.8s step-end infinite;
@@ -238,12 +434,54 @@ h1.name {
   50% { opacity: 0; }
 }
 
-/* AI loading dots */
+/* Skill progress bar */
+.skill-bar {
+  margin-bottom: 1rem;
+  text-align: left;
+  padding: 0 0.5rem;
+}
+
+.skill-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--green-mid);
+  display: block;
+  margin-bottom: 0.4rem;
+}
+
+.skill-track {
+  height: 8px;
+  background: #e8f5ef;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.skill-fill {
+  height: 100%;
+  width: 0%;
+  border-radius: 10px;
+  background: linear-gradient(90deg, var(--green-mid), var(--accent));
+  background-size: 200% 100%;
+  animation: barShine 2s linear infinite;
+  transition: width 2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.skill-fill.filled {
+  width: 85%;
+}
+
+@keyframes barShine {
+  0% { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
 .ai-dots {
   display: flex;
   justify-content: center;
   gap: 8px;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 .ai-dots span {
@@ -258,8 +496,41 @@ h1.name {
 .ai-dots span:nth-child(3) { animation-delay: 0.3s; }
 
 @keyframes dotBounce {
-  0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
-  40% { transform: scale(1.2); opacity: 1; background: var(--accent); }
+  0%, 80%, 100% { transform: scale(0.6) translateY(0); opacity: 0.4; }
+  40% { transform: scale(1.2) translateY(-8px); opacity: 1; background: var(--accent); }
+}
+
+.icons-row {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 1.25rem;
+}
+
+.icon-chip {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.45rem 0.85rem;
+  border-radius: 10px;
+  background: #e8f5ef;
+  color: var(--green-mid);
+  animation: chipFloat 3s ease-in-out infinite;
+  cursor: default;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.icon-chip:hover {
+  transform: scale(1.15) rotate(-3deg);
+  background: var(--accent);
+  color: #0a3d2e;
+}
+
+.icon-chip:nth-child(2) { animation-delay: 0.3s; }
+.icon-chip:nth-child(3) { animation-delay: 0.6s; }
+
+@keyframes chipFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
 }
 
 .credit {
@@ -267,6 +538,12 @@ h1.name {
   color: #888;
   border-top: 1px solid #eee;
   padding-top: 1.25rem;
+  animation: creditWave 4s ease-in-out infinite;
+}
+
+@keyframes creditWave {
+  0%, 100% { letter-spacing: 0; }
+  50% { letter-spacing: 0.05em; }
 }
 
 .credit-text {
@@ -283,21 +560,19 @@ h1.name {
   animation: shimmerText 3s linear infinite;
 }
 
-/* Typing cursor on name while typing */
 .typing-active #name-text::after {
   content: "|";
-  -webkit-text-fill-color: var(--accent);
+  color: var(--accent);
   animation: blink 0.7s step-end infinite;
   margin-left: 2px;
 }
 
-/* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-
   #particles { display: none; }
+  .floating-shapes { display: none; }
 }
