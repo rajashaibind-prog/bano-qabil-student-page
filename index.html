@@ -10,7 +10,12 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
 </head>
 <body>
+  <div class="bg-gradient" aria-hidden="true"></div>
+  <canvas id="particles" aria-hidden="true"></canvas>
+
   <main class="card">
+    <div class="glow-ring" aria-hidden="true"></div>
+
     <div class="logo-wrap">
       <img
         src="assets/bano-qabil.svg"
@@ -20,10 +25,26 @@
         height="220"
       />
     </div>
-    <p class="program">Bano Qabil Student</p>
-    <h1>Muhammad Zain ul Abideen</h1>
-    <p class="course">Learning Essentials of AI</p>
-    <footer class="credit">Made with Cursor AI</footer>
+
+    <p class="program reveal">Bano Qabil Student</p>
+    <h1 class="reveal name">
+      <span id="name-text">Muhammad Zain ul Abideen</span>
+    </h1>
+    <p class="course reveal">
+      <span class="course-label">Learning</span>
+      <span class="course-highlight" id="course-text">Essentials of AI</span>
+    </p>
+
+    <div class="ai-dots reveal" aria-hidden="true">
+      <span></span><span></span><span></span>
+    </div>
+
+    <footer class="credit reveal">
+      <span class="credit-text">Made with</span>
+      <span class="cursor-brand">Cursor AI</span>
+    </footer>
   </main>
+
+  <script src="script.js"></script>
 </body>
 </html>
