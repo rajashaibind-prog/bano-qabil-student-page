@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-label="Bano Qabil">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f5c44"/>
+      <stop offset="100%" stop-color="#1a8f66"/>
+    </linearGradient>
+  </defs>
+  <rect width="240" height="240" rx="24" fill="url(#bg)"/>
+  <circle cx="120" cy="88" r="36" fill="none" stroke="#fff" stroke-width="3" opacity="0.9"/>
+  <path d="M120 64v48M96 88h48" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity="0.9"/>
+  <text x="120" y="148" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="22" font-weight="bold">Bano Qabil</text>
+  <text x="120" y="172" text-anchor="middle" fill="#c8f0e0" font-family="Arial, sans-serif" font-size="11" letter-spacing="2">FREE IT TRAINING</text>
+  <text x="120" y="200" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="10" opacity="0.85">Alkhidmat Foundation</text>
+</svg>
